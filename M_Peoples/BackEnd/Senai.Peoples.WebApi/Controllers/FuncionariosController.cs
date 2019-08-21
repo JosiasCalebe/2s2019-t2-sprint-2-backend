@@ -27,6 +27,18 @@ namespace Senai.Peoples.WebApi.Controllers
             return funcionarioRepository.ListarNomesCompletos();
         }
 
+        [HttpGet("ordenacao/{ordem}")]
+        public IActionResult ListarOrdenado(string ordem)
+        {
+            ordem = ordem.ToUpper();
+            if (ordem != "ASC" && ordem != "DESC")
+            {
+                return BadRequest();
+            }
+            List<FuncionarioDomain> funcionarios = funcionarioRepository.ListarOrdenado(ordem);
+            return Ok(funcionarios);
+        }
+
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
@@ -44,14 +56,14 @@ namespace Senai.Peoples.WebApi.Controllers
         [HttpGet("buscar/{nome}")]
         public IActionResult BuscarPorNome(string nome)
         {
-            FuncionarioDomain funcionario = funcionarioRepository.BuscarPorNome(nome);
-            if (funcionario == null)
+            List<FuncionarioDomain> funcionarios = funcionarioRepository.BuscarPorNome(nome);
+            if (funcionarios == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(funcionario);
+                return Ok(funcionarios);
             }
         }
 

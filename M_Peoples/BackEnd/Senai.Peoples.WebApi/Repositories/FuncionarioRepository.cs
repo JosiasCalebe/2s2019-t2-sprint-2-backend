@@ -58,6 +58,38 @@ namespace Senai.Peoples.WebApi.Repositories
             return funcionarios;
         }
 
+        public List<FuncionarioDomain> ListarOrdenado(string ordem)
+        {
+
+            List<FuncionarioDomain> funcionarios = new List<FuncionarioDomain>();
+            using (SqlConnection con = new SqlConnection(Conexao))
+            {
+                string Query = $"SELECT IdFuncionario, Nome, Sobrenome, DataDeNascimento FROM Funcionarios ORDER BY Nome {ordem}";
+                con.Open();
+                SqlDataReader sdr;
+                using (SqlCommand cmd = new SqlCommand(Query, con))
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        FuncionarioDomain funcionario = new FuncionarioDomain
+                        {
+                            IdFuncionario = Convert.ToInt32(sdr["IdFuncionario"])
+                            ,
+                            Nome = sdr["Nome"].ToString()
+                            ,
+                            Sobrenome = sdr["Sobrenome"].ToString()
+                            ,
+                            DataDeNascimento = Convert.ToDateTime(sdr["DataDeNascimento"])
+                        };
+                        funcionarios.Add(funcionario);
+                    }
+                }
+
+            }
+            return funcionarios;
+        }
+
         public List<FuncionarioDomain> ListarNomesCompletos()
         {
             List<FuncionarioDomain> funcionarios = new List<FuncionarioDomain>();
@@ -150,8 +182,9 @@ namespace Senai.Peoples.WebApi.Repositories
             }
         }
 
-        public FuncionarioDomain BuscarPorNome(string nome)
+        public List<FuncionarioDomain> BuscarPorNome(string nome)
         {
+            List<FuncionarioDomain> funcionarios = new List<FuncionarioDomain>();
             string Query = "SELECT IdFuncionario, Nome, Sobrenome, DataDeNascimento FROM Funcionarios WHERE Nome = @Nome";
             using (SqlConnection con = new SqlConnection(Conexao))
             {
@@ -176,10 +209,10 @@ namespace Senai.Peoples.WebApi.Repositories
                                 ,
                                 DataDeNascimento = Convert.ToDateTime(sdr["DataDeNascimento"])
                             };
-                            return funcionario;
+                            funcionarios.Add(funcionario);
                         }
                     }
-                    return null;
+                    return  funcionarios;
                 }
             }
         }

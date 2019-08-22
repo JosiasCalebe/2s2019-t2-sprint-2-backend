@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "9586fc41-d495-47f3-9307-aebb6c50ab91",
+		"name": "Senai.Filmes.Manha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generos",
+			"item": [
+				{
+					"name": "Generos.Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generos.Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\tnome : \"Suspense\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generos.Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\tnome : \"Suspense\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generos.Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generos.BuscarPorId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generos.BuscarFilmes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/1/filmes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								"1",
+								"filmes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generos.BuscarPorNome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/Genero/dra/buscar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Genero",
+								"dra",
+								"buscar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filmes",
+			"item": [
+				{
+					"name": "Filmes.Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/filmes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"filmes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmes.Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"titulo\" : \"Exterminador do Futuro I\"\n\t,\"idGenero\" : 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/filmes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"filmes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmes.BuscarPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"titulo\" : \"Exterminador do Futuro III\"\n\t,\"idGenero\" : 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/filmes/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"filmes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmes.BuscarPorNome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"titulo\" : \"Exterminador do Futuro III\"\n\t,\"idGenero\" : 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/filmes/exterminador/buscar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"filmes",
+								"exterminador",
+								"buscar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

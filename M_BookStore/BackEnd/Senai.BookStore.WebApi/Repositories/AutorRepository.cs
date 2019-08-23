@@ -111,10 +111,10 @@ namespace Senai.BookStore.WebApi.Repositories
             return autores;
         }
 
-        public List<LivroDomain> BuscarPorAno(int ano)
+        public List<AutorDomain> BuscarPorAno(int ano)
         {
-            List<LivroDomain> livros = new List<LivroDomain>();
-            string Query = "SELECT L.IdLivro, L.Descricao AS Titulo, L.IdAutor, L.IdGenero, A.Nome AS Autor, A.Email, A.Ativo, A.DataNascimento, G.Descricao AS Genero FROM Livros L INNER JOIN Generos G ON L.IdGenero = G.IdGenero INNER JOIN Autores A ON L.IdAutor = A.IdAutor WHERE A.DataNascimento >= @IdAutor";
+            List<AutorDomain> autores = new List<AutorDomain>();
+            string Query = "SELECT IdAutor, Nome, Email, Ativo, DataNascimento FROM Autores WHERE DataNascimento >= @Data";
 
             using (SqlConnection con = new SqlConnection(Conexao))
             {
@@ -122,36 +122,23 @@ namespace Senai.BookStore.WebApi.Repositories
                 SqlDataReader sdr;
                 using (SqlCommand cmd = new SqlCommand(Query, con))
                 {
-                    cmd.Parameters.AddWithValue("@IdAutor", "01/01/"+ano.ToString());
+                    cmd.Parameters.AddWithValue("@Data", "01/01/"+ano.ToString());
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
-                        LivroDomain livro = new LivroDomain
+                        AutorDomain autor = new AutorDomain
                         {
-                            IdLivro = Convert.ToInt32(sdr["IdLivro"]),
-                            Descricao = sdr["Titulo"].ToString(),
                             IdAutor = Convert.ToInt32(sdr["IdAutor"]),
-                            IdGenero = Convert.ToInt32(sdr["IdGenero"]),
-                            Autor = new AutorDomain
-                            {
-                                IdAutor = Convert.ToInt32(sdr["IdAutor"]),
-                                Nome = sdr["Autor"].ToString(),
-                                Email = sdr["Email"].ToString(),
-                                Ativo = Convert.ToBoolean(sdr["Ativo"]),
-                                DataNascimento = Convert.ToDateTime(sdr["DataNascimento"])
-                            },
-                            Genero = new GeneroDomain
-                            {
-                                IdGenero = Convert.ToInt32(sdr["IdGenero"]),
-                                Descricao = sdr["Genero"].ToString()
-                            }
-
+                            Nome = sdr["Nome"].ToString(),
+                            Email = sdr["Email"].ToString(),
+                            Ativo = Convert.ToBoolean(sdr["Ativo"]),
+                            DataNascimento = Convert.ToDateTime(sdr["DataNascimento"])
                         };
-                        livros.Add(livro);
+                        autores.Add(autor);
                     }
                 }
             }
-            return livros;
+            return autores;
         }
 
         public List<LivroDomain> BuscarLivros(int id)

@@ -30,7 +30,7 @@ namespace Senai.Filmes.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { msg = "Ops..." + ex.Message });
+                return NotFound(new { msg = "Ops..." + ex.Message });
             }
         }
 
@@ -43,7 +43,7 @@ namespace Senai.Filmes.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { msg = "Ops..." + ex.Message });
+                return NotFound(new { msg = "Ops..." + ex.Message });
             }
         }
 

@@ -7,32 +7,33 @@ using System.Threading.Tasks;
 
 namespace Senai.OpFlix.WebApi.Repositories
 {
-    public class CategoriaRepository : ICategoriaRepository
+    public class PlataformaRepository : IPlataformaRepository
     {
-        public void Cadastrar(Categorias categoria)
+
+        public void Cadastrar(Plataformas plataforma)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                ctx.Categorias.Add(categoria);
+                ctx.Plataformas.Add(plataforma);
                 ctx.SaveChanges();
             }
         }
 
-        public List<Categorias> Listar()
+        public List<Plataformas> Listar()
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Categorias.ToList();
+                return ctx.Plataformas.ToList();
             }
         }
 
-        public void Atualizar(int id, Categorias categoria)
+        public void Atualizar(int id, Plataformas plataforma)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                var a = ctx.Categorias.Find(id);
-                a.Categoria = categoria.Categoria;
-                ctx.Categorias.Update(a);
+                var a = ctx.Plataformas.Find(id);
+                a.Plataforma = plataforma.Plataforma;
+                ctx.Plataformas.Update(a);
                 ctx.SaveChanges();
             }
         }
@@ -41,17 +42,16 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                Categorias categoria = ctx.Categorias.Find(id);
-                ctx.Categorias.Remove(categoria);
+                Plataformas plataforma = ctx.Plataformas.Find(id);
+                ctx.Plataformas.Remove(plataforma);
                 ctx.SaveChanges();
             }
         }
-
-        public Categorias BuscarPorId(int id)
+        public Plataformas BuscarPorId(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Categorias.Find(id);
+                return ctx.Plataformas.Find(id);
             }
         }
     }

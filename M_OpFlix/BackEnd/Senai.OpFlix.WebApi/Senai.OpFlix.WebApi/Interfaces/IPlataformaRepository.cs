@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Senai.OpFlix.WebApi.Interfaces
 {
-    interface ICategoriaRepository
+    interface IPlataformaRepository
     {
-        void Cadastrar(Categorias categoria);
-        List<Categorias> Listar();
-        void Atualizar(int id, Categorias categoria);
+        void Cadastrar(Plataformas plataforma);
+        List<Plataformas> Listar();
+        void Atualizar(int id, Plataformas plataforma);
         void Deletar(int id);
-        Categorias BuscarPorId(int id);
+        Plataformas BuscarPorId(int id);
     }
 }

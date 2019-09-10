@@ -14,49 +14,21 @@ namespace Senai.OpFlix.WebApi.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class LancamentosController : ControllerBase
+    public class PlataformasController : ControllerBase
     {
-        private ILancamentoRepository LancamentoRepository { get; set; }
-        public LancamentosController()
+        private IPlataformaRepository PlataformaRepository { get; set; }
+        public PlataformasController()
         {
-            LancamentoRepository = new LancamentoRepository();
-        }
-
-        [HttpGet("todos")]
-        public IActionResult ListarTodos()
-        {
-            return Ok(LancamentoRepository.ListarTodos());
-        }
-
-        [HttpGet]
-        public IActionResult ListarDestinto()
-        {
-            return Ok(LancamentoRepository.ListarDestinto());
-        }
-        [HttpGet("{id}")]
-        public IActionResult Buscar(int id)
-        {
-            try
-            {
-                if(LancamentoRepository.BuscarPorId(id) == null)
-                {
-                    return NotFound();
-                }
-                return Ok(LancamentoRepository.BuscarPorId(id));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(new { mensagem = ex.Message });
-            }
+            PlataformaRepository = new PlataformaRepository();
         }
 
         [HttpPost]
         [Authorize(Roles = "A")]
-        public IActionResult Cadastrar(Lancamentos lancamento)
+        public IActionResult Cadastrar(Plataformas plataforma)
         {
             try
             {
-                LancamentoRepository.Cadastrar(lancamento);
+                PlataformaRepository.Cadastrar(plataforma);
                 return Ok();
             }
             catch (Exception ex)
@@ -65,15 +37,31 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+
+        [HttpGet]
+        public IActionResult Listar()
+        {
+            try
+            {
+                if (PlataformaRepository.Listar() == null) return NotFound();
+                return Ok(PlataformaRepository.Listar());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+
+        [HttpPut]
         [Authorize(Roles = "A")]
-        public IActionResult Atualizar(int id, Lancamentos lancamento)
+        public IActionResult Atualizar(int id, Plataformas plataforma)
         {
             try
             {
-                if (LancamentoRepository.BuscarPorId(id) == null)
+                if (PlataformaRepository.BuscarPorId(id) == null)
                     return NotFound();
-                LancamentoRepository.Atualizar(id, lancamento);
+                PlataformaRepository.Atualizar(id, plataforma);
                 return Ok();
             }
             catch (Exception ex)
@@ -82,15 +70,16 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+
+        [HttpDelete]
         [Authorize(Roles = "A")]
         public IActionResult Deletar(int id)
         {
             try
             {
-                if (LancamentoRepository.BuscarPorId(id) == null)
+                if (PlataformaRepository.BuscarPorId(id) == null)
                     return NotFound();
-                LancamentoRepository.Deletar(id);
+                PlataformaRepository.Deletar(id);
                 return Ok();
             }
             catch (Exception ex)

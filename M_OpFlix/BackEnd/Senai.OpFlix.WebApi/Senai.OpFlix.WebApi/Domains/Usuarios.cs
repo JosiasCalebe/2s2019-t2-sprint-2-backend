@@ -13,5 +13,6 @@ namespace Senai.OpFlix.WebApi.Domains
         public DateTime DataDeNascimento { get; set; }
         public string Tipo { get; set; }
         public string ImagemUsuario { get; set; }
+        public List<Favoritos> Favoritos { get; set; }
     }
 }

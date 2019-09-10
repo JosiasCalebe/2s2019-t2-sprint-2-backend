@@ -15,6 +15,7 @@ namespace Senai.OpFlix.WebApi.Domains
         public string TipoDeMidia { get; set; }
         public TimeSpan? TempoDeDuracao { get; set; }
         public int Episodios { get; set; }
+        public List<Favoritos> Favoritos { get; set; }
 
         public Categorias IdCategoriaNavigation { get; set; }
         public ClassificacoesIndicativas IdClassificacaoIndicativaNavigation { get; set; }

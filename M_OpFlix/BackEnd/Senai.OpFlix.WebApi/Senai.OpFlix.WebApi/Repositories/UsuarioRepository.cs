@@ -34,8 +34,7 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             string Query;
             SqlCommand cmd;
-            using (SqlConnection
-                 con = new SqlConnection(Conexao))
+            using (SqlConnection con = new SqlConnection(Conexao))
             {
                 if (usuario.ImagemUsuario == null)
                 {

@@ -23,7 +23,10 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Plataformas.ToList();
+                var lista = ctx.Plataformas.ToList();
+                foreach (var item in lista)
+                    item.Lancamentos = null;
+                return lista;
             }
         }
 

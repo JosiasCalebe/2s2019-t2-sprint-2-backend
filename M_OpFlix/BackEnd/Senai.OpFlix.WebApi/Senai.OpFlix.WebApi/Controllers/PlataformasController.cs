@@ -43,7 +43,8 @@ namespace Senai.OpFlix.WebApi.Controllers
         {
             try
             {
-                if (PlataformaRepository.Listar() == null) return NotFound();
+                if (PlataformaRepository.Listar() == null)
+                    return NotFound();
                 return Ok(PlataformaRepository.Listar());
             }
             catch (Exception ex)

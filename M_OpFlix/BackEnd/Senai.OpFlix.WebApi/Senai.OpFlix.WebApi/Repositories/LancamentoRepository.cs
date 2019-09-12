@@ -13,7 +13,7 @@ namespace Senai.OpFlix.WebApi.Repositories
     public class LancamentoRepository : ILancamentoRepository
     {
         private string Conexao = "Data Source=.\\SqlExpress; initial catalog=M_OpFlix; User Id=sa;Pwd=132";
-        public List<Lancamentos> ListarTodos()
+        public List<Lancamentos> ListarLancamentos()
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
@@ -21,10 +21,10 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
-        public List<LancamentoViewModel> ListarDestinto()
+            public List<LancamentoViewModel> ListarLancamentoViewModel(string query)
         {
             List<LancamentoViewModel> lancamentos = new List<LancamentoViewModel>();
-            string Query = "SELECT * FROM vmSelecionarDestintos";
+            string Query = query;
             using (SqlConnection con = new SqlConnection(Conexao))
             {
                 con.Open();
@@ -44,6 +44,16 @@ namespace Senai.OpFlix.WebApi.Repositories
                             TempoDeDuracao = TimeSpan.Parse(sdr["TempoDeDuracao"].ToString()),
                             DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"])
                         };
+
+                        try
+                        {
+                            lancamento.Plataforma = sdr["Plataforma"].ToString();
+                        }
+                        catch (Exception)
+                        {
+                            lancamento.Plataforma = null;
+                        }
+
                         if (sdr["TipoDeMidia"].ToString() == "F")
                         {
                             lancamento.TipoDeMidia = "Filme";
@@ -61,19 +71,46 @@ namespace Senai.OpFlix.WebApi.Repositories
             return lancamentos;
         }
 
+        public List<LancamentoViewModel> ListarDestinto()
+        {
+            return ListarLancamentoViewModel("SELECT * FROM vmSelecionarDestintos");
+        }
+
+        public List<LancamentoViewModel> ListarPorIdCategoria(int id)
+        {
+            return ListarLancamentoViewModel($"EXEC LancamentosPorIdCategoria @IdCategoria = {id}");
+        }
+
+        public List<LancamentoViewModel> ListarPorIdPlataforma(int id)
+        {
+            return ListarLancamentoViewModel($"EXEC LancamentosPorIdPlataforma @IdPlataforma = {id}");
+        }
+
+        public List<LancamentoViewModel> ListarPorData(string data)
+        {
+            data = $"'{data}'";
+            return ListarLancamentoViewModel($"EXEC LancamentosPorDataDeLancamento @Data = {data}");
+        }
+
+        public List<LancamentoViewModel> ListarFavoritos(int id)
+        {
+            return ListarLancamentoViewModel($"EXEC FavoritosPorIdUsuario @IdUsuario = {id}");
+        }
+
+        public void Favoritar(Favoritos favorito)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                ctx.Favoritos.Add(favorito);
+                ctx.SaveChanges();
+            }
+        }
+
         public Lancamentos BuscarPorId(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                var lista = ListarTodos();
-                foreach (var item in lista)
-                {
-                    if(item.IdLancamento == id)
-                    {
-                        return item;
-                    }
-                }
-                return null;
+                return ctx.Lancamentos.Find(id);
             }
         }
 
@@ -82,9 +119,7 @@ namespace Senai.OpFlix.WebApi.Repositories
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 if(lancamento.TipoDeMidia == "F" && lancamento.Episodios != 1)
-                {
                     lancamento.Episodios = 1;
-                }
                 ctx.Lancamentos.Add(lancamento);
                 ctx.SaveChanges();
             }
@@ -109,7 +144,8 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
-        public void Deletar(int id)
+
+public void Deletar(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {

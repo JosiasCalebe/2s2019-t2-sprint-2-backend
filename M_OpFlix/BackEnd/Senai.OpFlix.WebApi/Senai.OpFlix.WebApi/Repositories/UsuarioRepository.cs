@@ -58,6 +58,33 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
+        public void Atualizar(int id, Usuarios usuario)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                var a = ctx.Usuarios.Find(id);
+                a.Nome = usuario.Nome;
+                a.NomeDeUsuario = usuario.NomeDeUsuario;
+                a.Email = usuario.Email;
+                a.ImagemUsuario = usuario.ImagemUsuario;
+                ctx.Usuarios.Update(a);
+                ctx.SaveChanges();
+            }
+        }
+        public void Atualizar(string nomeDeUsuario, Usuarios usuario)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                var a = ctx.Usuarios.FirstOrDefault(x=> x.NomeDeUsuario == nomeDeUsuario);
+                a.Nome = usuario.Nome;
+                a.NomeDeUsuario = usuario.NomeDeUsuario;
+                a.Email = usuario.Email;
+                a.ImagemUsuario = usuario.ImagemUsuario;
+                ctx.Usuarios.Update(a);
+                ctx.SaveChanges();
+            }
+        }
+
         public Usuarios BuscarPorEmailESenha(LoginViewModel login)
         {
             using (OpFlixContext ctx = new OpFlixContext())

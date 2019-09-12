@@ -17,7 +17,7 @@ namespace Senai.OpFlix.WebApi.Controllers
     public class CategoriasController : ControllerBase
     {
         private ICategoriaRepository CategoriaRepository { get; set; }
-        CategoriasController()
+        public CategoriasController()
         {
             CategoriaRepository = new CategoriaRepository();
         }
@@ -44,7 +44,8 @@ namespace Senai.OpFlix.WebApi.Controllers
         {
             try
             {
-                if (CategoriaRepository.Listar() == null) return NotFound();
+                if (CategoriaRepository.Listar() == null)
+                    return NotFound();
                 return Ok(CategoriaRepository.Listar());
             }
             catch(Exception ex)

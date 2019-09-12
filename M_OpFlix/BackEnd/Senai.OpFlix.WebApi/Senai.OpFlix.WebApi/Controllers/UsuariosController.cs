@@ -41,28 +41,52 @@ namespace Senai.OpFlix.WebApi.Controllers
                 try
                 {
                     TipoUsuario = HttpContext.User.Claims.First(x => x.Type == "TipoDeUsuario").Value;
+                    if (TipoUsuario == "A")
+                        UsuarioRepository.CadastrarAdmin(usuario);
+                    else
+                        return Forbid();
                 }
                 catch (Exception)
                 {
                     TipoUsuario = null;
-                }
-                if (TipoUsuario == "A"){
-                    UsuarioRepository.CadastrarAdmin(usuario);
-                }
-                else if(TipoUsuario == null)
-                {
                     UsuarioRepository.Cadastrar(usuario);
-
-                }
-                else
-                {
-                    return Forbid();
                 }
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { mensagem = "Erro " + ex.Message });
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        [HttpPut]
+        [Authorize]
+        public IActionResult AtualizarUsuario(Usuarios usuario)
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                UsuarioRepository.Atualizar(idUsuario, usuario);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        [HttpPut("{nomeDeUsuario}")]
+        [Authorize (Roles = "A")]
+        public IActionResult AtualizarUsuario(string nomeDeUsuario, Usuarios usuario)
+        {
+            try
+            {
+                UsuarioRepository.Atualizar(nomeDeUsuario, usuario);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
             }
         }
 
@@ -74,9 +98,7 @@ namespace Senai.OpFlix.WebApi.Controllers
             {
                 Usuarios Usuario = UsuarioRepository.BuscarPorEmailESenha(login);
                 if (Usuario == null)
-                {
                     return NotFound(new { mensagem = "Email ou senha inválidos" });
-                }
                 var claims = new[]
                 {
 
@@ -86,6 +108,7 @@ namespace Senai.OpFlix.WebApi.Controllers
 
                     new Claim(ClaimTypes.Role, Usuario.Tipo),
                     new Claim("TipoDeUsuario", Usuario.Tipo),
+                    new Claim("IdUsuario", Usuario.IdUsuario.ToString()),
                 };
 
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("opflix-chave-autenticacao"));

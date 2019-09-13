@@ -1,5 +1,6 @@
 ﻿using Senai.OpFlix.WebApi.Domains;
 using Senai.OpFlix.WebApi.Interfaces;
+using Senai.OpFlix.WebApi.Utils;
 using Senai.OpFlix.WebApi.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
+                usuario.Senha = HasherDeSenhas.Hash(usuario.Senha);
                 ctx.Usuarios.Add(usuario);
                 ctx.SaveChanges();
             }
@@ -26,7 +28,9 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Usuarios.ToList();
+                var lista = ctx.Usuarios.ToList();
+                foreach (var item in lista) item.Senha = null;
+                return lista;
             }
         }
 
@@ -50,7 +54,7 @@ namespace Senai.OpFlix.WebApi.Repositories
                 }
                 cmd.Parameters.AddWithValue("@Nome", usuario.Nome);
                 cmd.Parameters.AddWithValue("@Email", usuario.Email);
-                cmd.Parameters.AddWithValue("@Senha", usuario.Senha);
+                cmd.Parameters.AddWithValue("@Senha", HasherDeSenhas.Hash(usuario.Senha));
                 cmd.Parameters.AddWithValue("@NomeDeUsuario", usuario.NomeDeUsuario);
                 cmd.Parameters.AddWithValue("@DataDeNascimento", usuario.DataDeNascimento);
                 con.Open();
@@ -66,21 +70,20 @@ namespace Senai.OpFlix.WebApi.Repositories
                 a.Nome = usuario.Nome;
                 a.NomeDeUsuario = usuario.NomeDeUsuario;
                 a.Email = usuario.Email;
-                a.ImagemUsuario = usuario.ImagemUsuario;
+                a.Senha = HasherDeSenhas.Hash(usuario.Senha);
+                if(usuario.ImagemUsuario != null) a.ImagemUsuario = usuario.ImagemUsuario;
                 ctx.Usuarios.Update(a);
                 ctx.SaveChanges();
             }
         }
-        public void Atualizar(string nomeDeUsuario, Usuarios usuario)
+
+
+        public void Deletar(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                var a = ctx.Usuarios.FirstOrDefault(x=> x.NomeDeUsuario == nomeDeUsuario);
-                a.Nome = usuario.Nome;
-                a.NomeDeUsuario = usuario.NomeDeUsuario;
-                a.Email = usuario.Email;
-                a.ImagemUsuario = usuario.ImagemUsuario;
-                ctx.Usuarios.Update(a);
+                Usuarios usuario = ctx.Usuarios.Find(id);
+                ctx.Usuarios.Remove(usuario);
                 ctx.SaveChanges();
             }
         }
@@ -89,12 +92,19 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                Usuarios Usuario = ctx.Usuarios.FirstOrDefault(x => x.Email == login.Email && x.Senha == login.Senha);
-                if (Usuario == null)
+                Usuarios Usuario = ctx.Usuarios.FirstOrDefault(x => x.Email == login.Email);
+                if (HasherDeSenhas.Verificar(login.Senha, Usuario.Senha))
                 {
-                    return null;
+                    return Usuario;
                 }
-                return Usuario;
+                return null;
+            }
+        }
+        public Usuarios BuscarPorId(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Usuarios.Find(id);
             }
         }
     }

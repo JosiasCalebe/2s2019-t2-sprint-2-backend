@@ -50,6 +50,8 @@ namespace Senai.OpFlix.WebApi.Repositories
                 ctx.SaveChanges();
             }
         }
+
+
         public Plataformas BuscarPorId(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())

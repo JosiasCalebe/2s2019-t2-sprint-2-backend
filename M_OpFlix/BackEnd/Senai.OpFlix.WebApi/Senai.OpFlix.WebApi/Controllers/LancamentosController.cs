@@ -74,6 +74,8 @@ namespace Senai.OpFlix.WebApi.Controllers
         {
             try
             {
+                if (!DateTime.TryParse(data, out DateTime date))
+                    return BadRequest(new { mensagem = "data inválida" });
                 if (LancamentoRepository.ListarPorData(data) == null)
                     return NoContent();
                 return Ok(LancamentoRepository.ListarPorData(data));

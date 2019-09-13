@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Senai.OpFlix.WebApi.Domains;
 using Senai.OpFlix.WebApi.Interfaces;
 using Senai.OpFlix.WebApi.Repositories;
+using Senai.OpFlix.WebApi.Utils;
 using Senai.OpFlix.WebApi.ViewModels;
 
 namespace Senai.OpFlix.WebApi.Controllers
@@ -27,8 +28,11 @@ namespace Senai.OpFlix.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "A")]
         public IActionResult Listar()
         {
+            if (UsuarioRepository.Listar() == null)
+                return NotFound();
             return Ok(UsuarioRepository.Listar());
         }
 
@@ -75,19 +79,49 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-        [HttpPut("{nomeDeUsuario}")]
-        [Authorize (Roles = "A")]
-        public IActionResult AtualizarUsuario(string nomeDeUsuario, Usuarios usuario)
+        [HttpPut("{id}")]
+        [Authorize(Roles = "A")]
+        public IActionResult AtualizarUsuario(int id, Usuarios usuario)
         {
             try
             {
-                UsuarioRepository.Atualizar(nomeDeUsuario, usuario);
+                if (UsuarioRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                UsuarioRepository.Atualizar(id, usuario);
                 return Ok();
             }
             catch (Exception ex)
             {
                 return BadRequest(new { mensagem = ex.Message });
             }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "A")]
+        public IActionResult Deletar(int id)
+        {
+            try
+            {
+                if (UsuarioRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                UsuarioRepository.Deletar(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+
+
+        [HttpDelete]
+        [Authorize]
+        public IActionResult Deletar()
+        {
+            int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+            UsuarioRepository.Deletar(idUsuario);
+            return Ok();
         }
 
 

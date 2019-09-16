@@ -22,6 +22,10 @@ namespace Senai.OpFlix.WebApi.Controllers
             LancamentoRepository = new LancamentoRepository();
         }
 
+        /// <summary>
+        /// Lista todos os lançamentos.
+        /// </summary>
+        /// <returns>lista de lançamentos.</returns>
         [HttpGet("todos")]
         public IActionResult ListarTodos()
         {
@@ -30,14 +34,41 @@ namespace Senai.OpFlix.WebApi.Controllers
             return Ok(LancamentoRepository.ListarLancamentos());
         }
 
+        /// <summary>
+        /// Lista os lançamentos sem repetição.
+        /// </summary>
+        /// <returns>lista de lançamentos.</returns>
         [HttpGet]
         public IActionResult ListarDestinto()
         {
-            if (LancamentoRepository.ListarDestinto() == null)
-                return NoContent();
-            return Ok(LancamentoRepository.ListarDestinto());
+            try
+            {
+                int idUsuario;
+                try
+                {
+                    idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                    if (LancamentoRepository.ListarDestinto(idUsuario) == null)
+                        return NoContent();
+                    return Ok(LancamentoRepository.ListarDestinto(idUsuario));
+                }
+                catch (Exception)
+                {
+                    if (LancamentoRepository.ListarDestinto(null) == null)
+                        return NoContent();
+                    return Ok(LancamentoRepository.ListarDestinto(null));
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
         }
 
+        /// <summary>
+        /// Lista os lançamentos de acordo com o id da categoria.
+        /// </summary>
+        /// <param name="id">id da categoria.</param>
+        /// <returns>lista de lançamentos.</returns>
         [HttpGet("categorias/{id}")]
         public IActionResult ListarPorIdCategoria(int id)
         {
@@ -54,6 +85,11 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Lista os lançamentos de acordo com o id da plataforma.
+        /// </summary>
+        /// <param name="id">id da plataforma.</param>
+        /// <returns>lista de lançamentos.</returns>
         [HttpGet("plataformas/{id}")]
         public IActionResult ListarPorIdPlataforma(int id)
         {
@@ -69,6 +105,12 @@ namespace Senai.OpFlix.WebApi.Controllers
 
             }
         }
+
+        /// <summary>
+        /// Lista os lançamento de acordo com a data inserida.
+        /// </summary>
+        /// <param name="data">data.</param>
+        /// <returns>lista de lançamentos</returns>
         [HttpGet("data/{data}")]
         public IActionResult ListarPorData(string data)
         {
@@ -87,6 +129,10 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Lista os favoritos do usuário logado.
+        /// </summary>
+        /// <returns>lista de favoritos do usuário logado.</returns>
         [HttpGet("favoritos")]
         [Authorize]
         public IActionResult ListarFavoritos()
@@ -105,6 +151,31 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Busca um lançamento através do id.
+        /// </summary>
+        /// <param name="id">id do lançamento.</param>
+        /// <returns>um lançamento.</returns>
+        [HttpGet("{id}")]
+        public IActionResult Buscar(int id)
+        {
+            try
+            {
+                if (LancamentoRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                return Ok(LancamentoRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Favorita o lançamento no usuário logado.
+        /// </summary>
+        /// <param name="favorito">informações do favorito.</param>
+        /// <returns>status Ok</returns>
         [HttpPost("favoritos")]
         [Authorize]
         public IActionResult Favoritar(Favoritos favorito)
@@ -123,21 +194,11 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Buscar(int id)
-        {
-            try
-            {
-                if(LancamentoRepository.BuscarPorId(id) == null)
-                    return NotFound();
-                return Ok(LancamentoRepository.BuscarPorId(id));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(new { mensagem = ex.Message });
-            }
-        }
-
+        /// <summary>
+        /// Cadastra um lançamento.
+        /// </summary>
+        /// <param name="lancamento">informações do lançamento.</param>
+        /// <returns>status Ok</returns>
         [HttpPost]
         [Authorize(Roles = "A")]
         public IActionResult Cadastrar(Lancamentos lancamento)
@@ -153,23 +214,34 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = "A")]
-        public IActionResult Atualizar(int id, Lancamentos lancamento)
+        /// <summary>
+        /// Desfavorita um lançamento do usuário logado.
+        /// </summary>
+        /// <param name="favorito">informações do favorito.</param>
+        /// <returns>status Ok</returns>
+        [HttpDelete("favoritos")]
+        [Authorize]
+        public IActionResult Desfavoritar(Favoritos favorito)
         {
             try
             {
-                if (LancamentoRepository.BuscarPorId(id) == null)
-                    return NotFound();
-                LancamentoRepository.Atualizar(id, lancamento);
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                favorito.IdUsuario = idUsuario;
+                LancamentoRepository.Desfavoritar(favorito);
                 return Ok();
             }
             catch (Exception ex)
             {
                 return BadRequest(new { mensagem = ex.Message });
+
             }
         }
 
+        /// <summary>
+        /// Deleta um lançamento.
+        /// </summary>
+        /// <param name="id">id do lançamento.</param>
+        /// <returns>status Ok</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "A")]
         public IActionResult Deletar(int id)
@@ -179,6 +251,29 @@ namespace Senai.OpFlix.WebApi.Controllers
                 if (LancamentoRepository.BuscarPorId(id) == null)
                     return NotFound();
                 LancamentoRepository.Deletar(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Atualiza as informações de um lançamento.
+        /// </summary>
+        /// <param name="id">id do lançamento.</param>
+        /// <param name="lancamento">informações do lançamento.</param>
+        /// <returns>status Ok</returns>
+        [HttpPut("{id}")]
+        [Authorize(Roles = "A")]
+        public IActionResult Atualizar(int id, Lancamentos lancamento)
+        {
+            try
+            {
+                if (LancamentoRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                LancamentoRepository.Atualizar(id, lancamento);
                 return Ok();
             }
             catch (Exception ex)

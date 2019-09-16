@@ -10,12 +10,7 @@ namespace Senai.OpFlix.WebApi.Interfaces
     interface ILancamentoRepository
     {
         /// <summary>
-        /// Lista todos os lançamentos.
-        /// </summary>
-        /// <returns>Lista de lançamentos.</returns>
-        List<Lancamentos> ListarLancamentos();
-        /// <summary>
-        /// Lista os lançamentos através de uma query de SQL
+        /// Lista os lançamentos através de uma query de SQL.
         /// </summary>
         /// <param name="query">SQL query.</param>
         /// <returns>Lista de lançamentos.</returns>
@@ -23,10 +18,16 @@ namespace Senai.OpFlix.WebApi.Interfaces
         /// <summary>
         /// Lista os lançamentos.
         /// </summary>
+        /// <param name="id">id do usuário logado.</param>
         /// <returns>lista de lançamentos.</returns>
-        List<LancamentoViewModel> ListarDestinto();
+        List<LancamentoViewModel> ListarDestinto(int? id);
         /// <summary>
-        /// Lista os lançamentos através.
+        /// Lista todos os lançamentos.
+        /// </summary>
+        /// <returns>Lista de lançamentos.</returns>
+        List<Lancamentos> ListarLancamentos();
+        /// <summary>
+        /// Lista os lançamentos através da categoria.
         /// </summary>
         /// <param name="id">id da categoria.</param>
         /// <returns>Lista de lançamentos.</returns>
@@ -54,6 +55,11 @@ namespace Senai.OpFlix.WebApi.Interfaces
         /// </summary>
         /// <param name="favorito">informações do favorito.</param>
         void Favoritar(Favoritos favorito);
+        /// <summary>
+        /// Desfavorita um lançamento.
+        /// </summary>
+        /// <param name="favorito">informações do favorito.</param>
+        void Desfavoritar(Favoritos favorito);
         /// <summary>
         /// Busca um lançamento através do id.
         /// </summary>

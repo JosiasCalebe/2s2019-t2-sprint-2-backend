@@ -22,7 +22,11 @@ namespace Senai.OpFlix.WebApi.Controllers
             CategoriaRepository = new CategoriaRepository();
         }
 
-
+        /// <summary>
+        /// Cadastra uma categoria.
+        /// </summary>
+        /// <param name="categoria">informações da categoria.</param>
+        /// <returns>status Ok</returns>
         [HttpPost]
         [Authorize(Roles = "A")]
         public IActionResult Cadastrar(Categorias categoria)
@@ -38,7 +42,10 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Lista as categorias.
+        /// </summary>
+        /// <returns>lista de categorias.</returns>
         [HttpGet]
         public IActionResult Listar()
         {
@@ -54,8 +61,33 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Busca uma categoria.
+        /// </summary>
+        /// <param name="id">id da categoria.</param>
+        /// <returns>uma categoria.</returns>
+        [HttpGet("{id}")]
+        public IActionResult Buscar(int id)
+        {
+            try
+            {
+                if (CategoriaRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                return Ok(CategoriaRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
 
-        [HttpPut]
+        /// <summary>
+        /// Atualiza as informações de uma categoria.
+        /// </summary>
+        /// <param name="id">id da categoria.</param>
+        /// <param name="categoria">informações da categoria.</param>
+        /// <returns>status Ok</returns>
+        [HttpPut("{id}")]
         [Authorize(Roles = "A")]
         public IActionResult Atualizar(int id, Categorias categoria)
         {
@@ -72,8 +104,12 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-
-        [HttpDelete]
+        /// <summary>
+        /// Deleta uma categoria.
+        /// </summary>
+        /// <param name="id">id da categoria.</param>
+        /// <returns>status Ok</returns>
+        [HttpDelete("{id}")]
         [Authorize(Roles = "A")]
         public IActionResult Deletar(int id)
         {

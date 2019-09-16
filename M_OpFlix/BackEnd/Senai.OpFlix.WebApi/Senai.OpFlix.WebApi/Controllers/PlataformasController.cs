@@ -22,6 +22,11 @@ namespace Senai.OpFlix.WebApi.Controllers
             PlataformaRepository = new PlataformaRepository();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="plataforma"></param>
+        /// <returns>status Ok</returns>
         [HttpPost]
         [Authorize(Roles = "A")]
         public IActionResult Cadastrar(Plataformas plataforma)
@@ -37,7 +42,10 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Lista as plataformas.
+        /// </summary>
+        /// <returns>lista de plataformas.</returns>
         [HttpGet]
         public IActionResult Listar()
         {
@@ -53,8 +61,33 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Busca uma plataforma através do id.
+        /// </summary>
+        /// <param name="id">id da plataforma.</param>
+        /// <returns>uma plataforma.</returns>
+        [HttpGet("{id}")]
+        public IActionResult Buscar(int id)
+        {
+            try
+            {
+                if (PlataformaRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                return Ok(PlataformaRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
 
-        [HttpPut]
+        /// <summary>
+        /// Atualiza as informações de uma plataforma.
+        /// </summary>
+        /// <param name="id">id da plataforma.</param>
+        /// <param name="plataforma">informações da plataforma.</param>
+        /// <returns>status Ok</returns>
+        [HttpPut("{id}")]
         [Authorize(Roles = "A")]
         public IActionResult Atualizar(int id, Plataformas plataforma)
         {
@@ -71,8 +104,12 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-
-        [HttpDelete]
+        /// <summary>
+        /// Deleta uma plataforma.
+        /// </summary>
+        /// <param name="id">id da plataforma.</param>
+        /// <returns>status Ok</returns>
+        [HttpDelete("{id}")]
         [Authorize(Roles = "A")]
         public IActionResult Deletar(int id)
         {

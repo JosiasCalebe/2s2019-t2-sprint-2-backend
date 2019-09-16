@@ -13,6 +13,7 @@ namespace Senai.OpFlix.WebApi.Repositories
     public class LancamentoRepository : ILancamentoRepository
     {
         private string Conexao = "Data Source=.\\SqlExpress; initial catalog=M_OpFlix; User Id=sa;Pwd=132";
+
         public List<Lancamentos> ListarLancamentos()
         {
             using (OpFlixContext ctx = new OpFlixContext())
@@ -21,7 +22,7 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
-            public List<LancamentoViewModel> ListarLancamentoViewModel(string query)
+        public List<LancamentoViewModel> ListarLancamentoViewModel(string query)
         {
             List<LancamentoViewModel> lancamentos = new List<LancamentoViewModel>();
             string Query = query;
@@ -71,9 +72,12 @@ namespace Senai.OpFlix.WebApi.Repositories
             return lancamentos;
         }
 
-        public List<LancamentoViewModel> ListarDestinto()
+        public List<LancamentoViewModel> ListarDestinto(int? id)
         {
-            return ListarLancamentoViewModel("SELECT * FROM vmSelecionarDestintos");
+            if(id == null)
+                return ListarLancamentoViewModel("SELECT * FROM vmSelecionarDestintos");
+            else
+                return ListarLancamentoViewModel($"EXEC SelecionarDestintosPorIdUsuario @IdUsuario = {id}");
         }
 
         public List<LancamentoViewModel> ListarPorIdCategoria(int id)
@@ -97,20 +101,20 @@ namespace Senai.OpFlix.WebApi.Repositories
             return ListarLancamentoViewModel($"EXEC FavoritosPorIdUsuario @IdUsuario = {id}");
         }
 
+        public Lancamentos BuscarPorId(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Find(id);
+            }
+        }
+
         public void Favoritar(Favoritos favorito)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 ctx.Favoritos.Add(favorito);
                 ctx.SaveChanges();
-            }
-        }
-
-        public Lancamentos BuscarPorId(int id)
-        {
-            using (OpFlixContext ctx = new OpFlixContext())
-            {
-                return ctx.Lancamentos.Find(id);
             }
         }
 
@@ -138,14 +142,27 @@ namespace Senai.OpFlix.WebApi.Repositories
                 a.DataDeLancamento          = lancamento.DataDeLancamento;
                 a.TipoDeMidia               = lancamento.TipoDeMidia;
                 a.TempoDeDuracao            = lancamento.TempoDeDuracao;
-                a.Episodios                 = lancamento.Episodios;
+                if(a.TipoDeMidia == "F")    a.Episodios = 1;
+                else a.Episodios            = lancamento.Episodios;
                 ctx.Lancamentos.Update(a);
                 ctx.SaveChanges();
             }
         }
 
+        public void Desfavoritar(Favoritos favorito)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                foreach (var item in ctx.Favoritos.ToList())
+                    if (item.IdLancamento == favorito.IdLancamento && item.IdUsuario == favorito.IdUsuario)
+                    {
+                        ctx.Favoritos.Remove(item);
+                        ctx.SaveChanges();
+                    }
+            }
+        }
 
-public void Deletar(int id)
+        public void Deletar(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {

@@ -1,0 +1,1323 @@
+{
+	"info": {
+		"_postman_id": "bd9ce206-af29-433d-ab25-cfb5c6a0b52f",
+		"name": "Senai.OpFlix.Manha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Usuarios.Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.Cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Taina\",\r\n        \"email\": \"taina@email.com\",\r\n        \"nomeDeUsuario\": \"Taina\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"qualquerCoisa\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.CadastrarAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.AtualizarUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.AtualizarAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.DeletarUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.DeletarAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lancamentos",
+			"item": [
+				{
+					"name": "Lancamentos.ListarDestintos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.ListarComTodasInformacoes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/todos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.ListarPorIdCategoria",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/categorias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.ListarPorIdPlataforma",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/plataformas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"plataformas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.ListarPorData",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/data/31-07-2014",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"data",
+								"31-07-2014"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.BuscarPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODI4MDEsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.67v4liTyK-8laN5PPvDjnGhuTMhX81wkx1b3Hlo295A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.ListarFavoritos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODY0MzYsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.mT78QbtzxxolfQJ1L3F4Fq31KP6m7wFK3LF2SPkD5zM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Xitaozinho\",\r\n        \"email\": \"chichi@email.com\",\r\n        \"nomeDeUsuario\": \"Xororo\",\r\n        \"dataDeNascimento\": \"2003-02-24T00:00:00\",\r\n        \"senha\":\"123456\",\r\n        \"tipo\": \"A\",\r\n        \"imagemUsuario\": \"https://image.flaticon.com/icons/svg/17/17004.svg\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/favoritos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.Cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzM2MzcsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.h3USzPEsTnbb3yc_ILvzObL2xfl1fSavKP_ikB7rx6I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCategoria\": 4,\r\n    \"idPlataforma\": 1,\r\n    \"idClassificacaoIndicativa\": 5,\r\n    \"titulo\": \"Sherlock Holmes\",\r\n    \"sinopse\": \"Sherlockinho Holmes.\",\r\n    \"dataDeLancamento\": \"2017-07-14T00:00:00\",\r\n    \"tipoDeMidia\": \"F\",\r\n    \"tempoDeDuracao\": \"01:50:00\",\r\n    \"episodios\": 9\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.Favoritar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1NjgzODY0MzYsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.mT78QbtzxxolfQJ1L3F4Fq31KP6m7wFK3LF2SPkD5zM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"idLancamento\": \"3\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/favoritos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.Desfavoritar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvYkBlbWFpbC5jb20iLCJqdGkiOiI0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVSIsIlRpcG9EZVVzdWFyaW8iOiJVIiwiSWRVc3VhcmlvIjoiNCIsImV4cCI6MTU2ODYzMjc5MCwiaXNzIjoiU2VuYWkuT3BGbGl4LldlYkFwaSIsImF1ZCI6IlNlbmFpLk9wRmxpeC5XZWJBcGkifQ.LhZmq-qvJ3RsxfVS5jeHJHcmpBFyNvrtOi0M6oOty1E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"idLancamento\":\"10\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/favoritos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzM2MzcsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.h3USzPEsTnbb3yc_ILvzObL2xfl1fSavKP_ikB7rx6I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCategoria\": 4,\r\n    \"idPlataforma\": 1,\r\n    \"idClassificacaoIndicativa\": 4,\r\n    \"titulo\": \"Sherlock Holmes\",\r\n    \"sinopse\": \"Sherlock Holmes.\",\r\n    \"dataDeLancamento\": \"2018-07-14T00:00:00\",\r\n    \"tipoDeMidia\": \"S\",\r\n    \"tempoDeDuracao\": \"00:50:00\",\r\n    \"episodios\": 9\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lancamentos.Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzM2MzcsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.h3USzPEsTnbb3yc_ILvzObL2xfl1fSavKP_ikB7rx6I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCategoria\": 4,\r\n    \"idPlataforma\": 1,\r\n    \"idClassificacaoIndicativa\": 4,\r\n    \"titulo\": \"Sherlock Holmes\",\r\n    \"sinopse\": \"Sherlock Holmes.\",\r\n    \"dataDeLancamento\": \"2018-07-14T00:00:00\",\r\n    \"tipoDeMidia\": \"S\",\r\n    \"tempoDeDuracao\": \"00:50:00\",\r\n    \"episodios\": 9\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/lancamentos/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"lancamentos",
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Categorias.Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categorias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorias.BuscarPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Erik\",\r\n        \"email\": \"erik@email.com\",\r\n        \"senha\": \"123456\",\r\n        \"nomeDeUsuario\": \"Erik\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categorias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorias.Cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"categoria\": \"Stand-Up\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categorias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorias.Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"categoria\": \"Stand-Up\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categorias/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categorias",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorias.Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"categoria\": \"Stand-Up\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categorias/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categorias",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plataformas",
+			"item": [
+				{
+					"name": "Plataformas.Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"categoria\": \"Stand-Up\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/plataformas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"plataformas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Plataformas.BuscarPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"categoria\": \"Stand-Up\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/plataformas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"plataformas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Plataformas.Cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"plataforma\": \"Hulu\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/plataformas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"plataformas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Plataformas.Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"plataforma\": \"Hulu\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/plataformas/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"plataformas",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Plataformas.Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVyaWtAZW1haWwuY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkEiLCJUaXBvRGVVc3VhcmlvIjoiQSIsIklkVXN1YXJpbyI6IjEiLCJleHAiOjE1Njg2MzQ1MDAsImlzcyI6IlNlbmFpLk9wRmxpeC5XZWJBcGkiLCJhdWQiOiJTZW5haS5PcEZsaXguV2ViQXBpIn0.s4xKf040O89fAq0u-dOO-35YWDSS-enRO2o-toYUl00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"plataforma\": \"Hulu\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/plataformas/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"plataformas",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

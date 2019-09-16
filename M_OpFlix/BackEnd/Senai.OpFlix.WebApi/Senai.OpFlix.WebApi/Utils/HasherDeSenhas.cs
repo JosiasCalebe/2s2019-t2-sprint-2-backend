@@ -70,7 +70,7 @@ namespace Senai.OpFlix.WebApi.Utils
             }
 
             var stringHashDividida = senhaHasheada.Replace("$MEUHASH$V1$", "").Split('$');
-            var iterations = int.Parse(stringHashDividida[0]);
+            var iteracoes = int.Parse(stringHashDividida[0]);
             var base64Hash = stringHashDividida[1];
 
             var hashBytes = Convert.FromBase64String(base64Hash);
@@ -78,7 +78,7 @@ namespace Senai.OpFlix.WebApi.Utils
             var salt = new byte[TamanhoSalt];
             Array.Copy(hashBytes, 0, salt, 0, TamanhoSalt);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, iterations);
+            var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, iteracoes);
             byte[] hash = pbkdf2.GetBytes(TamanhoHash);
 
             for (var i = 0; i < TamanhoHash; i++)

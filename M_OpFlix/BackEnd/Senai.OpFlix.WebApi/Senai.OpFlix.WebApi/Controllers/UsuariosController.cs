@@ -27,6 +27,10 @@ namespace Senai.OpFlix.WebApi.Controllers
             UsuarioRepository = new UsuarioRepository();
         }
 
+        /// <summary>
+        /// Lista todos os usuários.
+        /// </summary>
+        /// <returns>lista de usuários.</returns>
         [HttpGet]
         [Authorize(Roles = "A")]
         public IActionResult Listar()
@@ -36,8 +40,13 @@ namespace Senai.OpFlix.WebApi.Controllers
             return Ok(UsuarioRepository.Listar());
         }
 
+        /// <summary>
+        /// Cadastra um usuário.
+        /// </summary>
+        /// <param name="usuario">informações do usuário.</param>
+        /// <returns>status Ok</returns>
         [HttpPost("cadastrar")]
-        public IActionResult CadastrarAdmin(Usuarios usuario)
+        public IActionResult Cadastrar(Usuarios usuario)
         {
             try
             {
@@ -63,68 +72,11 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
-        [HttpPut]
-        [Authorize]
-        public IActionResult AtualizarUsuario(Usuarios usuario)
-        {
-            try
-            {
-                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
-                UsuarioRepository.Atualizar(idUsuario, usuario);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { mensagem = ex.Message });
-            }
-        }
-
-        [HttpPut("{id}")]
-        [Authorize(Roles = "A")]
-        public IActionResult AtualizarUsuario(int id, Usuarios usuario)
-        {
-            try
-            {
-                if (UsuarioRepository.BuscarPorId(id) == null)
-                    return NotFound();
-                UsuarioRepository.Atualizar(id, usuario);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { mensagem = ex.Message });
-            }
-        }
-
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "A")]
-        public IActionResult Deletar(int id)
-        {
-            try
-            {
-                if (UsuarioRepository.BuscarPorId(id) == null)
-                    return NotFound();
-                UsuarioRepository.Deletar(id);
-                return Ok();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(new { mensagem = ex.Message });
-            }
-        }
-
-
-
-        [HttpDelete]
-        [Authorize]
-        public IActionResult Deletar()
-        {
-            int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
-            UsuarioRepository.Deletar(idUsuario);
-            return Ok();
-        }
-
-
+        /// <summary>
+        /// Faz o login um usuário.
+        /// </summary>
+        /// <param name="login">informações de login.</param>
+        /// <returns>status Ok</returns>
         [HttpPost("login")]
         public IActionResult Login(LoginViewModel login)
         {
@@ -165,6 +117,85 @@ namespace Senai.OpFlix.WebApi.Controllers
             {
                 return BadRequest(new { mensagem = "Erro " + ex.Message });
             }
+        }
+
+        /// <summary>
+        /// Atualiza as iformações do usuário logado.
+        /// </summary>
+        /// <param name="usuario">informações do usuário.</param>
+        /// <returns>status Ok</returns>
+        [HttpPut]
+        [Authorize]
+        public IActionResult AtualizarUsuario(Usuarios usuario)
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                UsuarioRepository.Atualizar(idUsuario, usuario);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Atualiza um usuário através do id.
+        /// </summary>
+        /// <param name="id">id do usuário.</param>
+        /// <param name="usuario">informações do usuário.</param>
+        /// <returns>status Ok</returns>
+        [HttpPut("{id}")]
+        [Authorize(Roles = "A")]
+        public IActionResult AtualizarUsuario(int id, Usuarios usuario)
+        {
+            try
+            {
+                if (UsuarioRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                UsuarioRepository.Atualizar(id, usuario);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Deleta um usuário atráves do id.
+        /// </summary>
+        /// <param name="id">id do usuário.</param>
+        /// <returns>status Ok</returns>
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "A")]
+        public IActionResult Deletar(int id)
+        {
+            try
+            {
+                if (UsuarioRepository.BuscarPorId(id) == null)
+                    return NotFound();
+                UsuarioRepository.Deletar(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Deleta um usuário logado.
+        /// </summary>
+        /// <returns>status Ok</returns>
+        [HttpDelete]
+        [Authorize]
+        public IActionResult Deletar()
+        {
+            int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+            UsuarioRepository.Deletar(idUsuario);
+            return Ok();
         }
     }
 }

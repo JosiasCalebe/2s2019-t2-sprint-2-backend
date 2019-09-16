@@ -54,7 +54,9 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Categorias.Find(id);
+                var item = ctx.Categorias.Find(id);
+                item.Lancamentos = null;
+                return item;
             }
         }
     }

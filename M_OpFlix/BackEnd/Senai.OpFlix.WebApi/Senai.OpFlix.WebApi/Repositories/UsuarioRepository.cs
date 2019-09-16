@@ -34,7 +34,7 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
-            public void Cadastrar(Usuarios usuario)
+        public void Cadastrar(Usuarios usuario)
         {
             string Query;
             SqlCommand cmd;
@@ -77,7 +77,6 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
-
         public void Deletar(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())
@@ -100,6 +99,7 @@ namespace Senai.OpFlix.WebApi.Repositories
                 return null;
             }
         }
+
         public Usuarios BuscarPorId(int id)
         {
             using (OpFlixContext ctx = new OpFlixContext())

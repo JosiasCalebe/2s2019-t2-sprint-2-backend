@@ -33,6 +33,8 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>lista de usuários.</returns>
         [HttpGet]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Listar()
         {
             if (UsuarioRepository.Listar() == null)
@@ -46,6 +48,9 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="usuario">informações do usuário.</param>
         /// <returns>status Ok</returns>
         [HttpPost("cadastrar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Cadastrar(Usuarios usuario)
         {
             try
@@ -64,7 +69,7 @@ namespace Senai.OpFlix.WebApi.Controllers
                     TipoUsuario = null;
                     UsuarioRepository.Cadastrar(usuario);
                 }
-                return Ok();
+                return Ok(new { mensagem = "Usuário cadastrado com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -78,6 +83,9 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="login">informações de login.</param>
         /// <returns>status Ok</returns>
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Login(LoginViewModel login)
         {
             try
@@ -115,7 +123,7 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { mensagem = "Erro " + ex.Message });
+                return BadRequest(new { mensagem = ex.Message });
             }
         }
 
@@ -126,13 +134,15 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpPut]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AtualizarUsuario(Usuarios usuario)
         {
             try
             {
                 int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
                 UsuarioRepository.Atualizar(idUsuario, usuario);
-                return Ok();
+                return Ok(new { mensagem = "Usuário atualizado com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -148,14 +158,17 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AtualizarUsuario(int id, Usuarios usuario)
         {
             try
             {
                 if (UsuarioRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Usuário não encontrado!" });
                 UsuarioRepository.Atualizar(id, usuario);
-                return Ok();
+                return Ok(new { mensagem = "Usuário atualizado com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -170,14 +183,17 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Deletar(int id)
         {
             try
             {
                 if (UsuarioRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Usuário não encontrado!" });
                 UsuarioRepository.Deletar(id);
-                return Ok();
+                return Ok(new { mensagem = "Usuário deletado com sucesso!" });
             }
             catch(Exception ex)
             {
@@ -191,11 +207,20 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpDelete]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Deletar()
         {
-            int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
-            UsuarioRepository.Deletar(idUsuario);
-            return Ok();
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                UsuarioRepository.Deletar(idUsuario);
+                return Ok(new { mensagem = "Usuário deletado com sucesso!" });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message});
+            }
         }
     }
 }

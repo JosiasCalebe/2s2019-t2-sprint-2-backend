@@ -23,18 +23,20 @@ namespace Senai.OpFlix.WebApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Cadastra uma plataforma.
         /// </summary>
         /// <param name="plataforma"></param>
         /// <returns>status Ok</returns>
         [HttpPost]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Cadastrar(Plataformas plataforma)
         {
             try
             {
                 PlataformaRepository.Cadastrar(plataforma);
-                return Ok();
+                return Ok(new { mensagem = "Plataforma cadastrada com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -47,12 +49,15 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// </summary>
         /// <returns>lista de plataformas.</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Listar()
         {
             try
             {
                 if (PlataformaRepository.Listar() == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Plataformas não encontradas!" });
                 return Ok(PlataformaRepository.Listar());
             }
             catch (Exception ex)
@@ -67,12 +72,15 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="id">id da plataforma.</param>
         /// <returns>uma plataforma.</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Buscar(int id)
         {
             try
             {
                 if (PlataformaRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Plataforma não encontrada!" });
                 return Ok(PlataformaRepository.BuscarPorId(id));
             }
             catch (Exception ex)
@@ -89,14 +97,17 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Atualizar(int id, Plataformas plataforma)
         {
             try
             {
                 if (PlataformaRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Plataforma não encontada!" });
                 PlataformaRepository.Atualizar(id, plataforma);
-                return Ok();
+                return Ok(new { mensagem = "Plataforma atualizada com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -111,14 +122,17 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Deletar(int id)
         {
             try
             {
                 if (PlataformaRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Plataforma não encontrada!" });
                 PlataformaRepository.Deletar(id);
-                return Ok();
+                return Ok(new { mensagem = "Plataforma deletada com sucesso!" });
             }
             catch (Exception ex)
             {

@@ -29,12 +29,14 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpPost]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Cadastrar(Categorias categoria)
         {
             try
             {
                 CategoriaRepository.Cadastrar(categoria);
-                return Ok();
+                return Ok(new { mensagem = "Categoria cadastrada com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -47,12 +49,15 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// </summary>
         /// <returns>lista de categorias.</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Listar()
         {
             try
             {
                 if (CategoriaRepository.Listar() == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Categorias não encontradas!" });
                 return Ok(CategoriaRepository.Listar());
             }
             catch(Exception ex)
@@ -67,12 +72,15 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="id">id da categoria.</param>
         /// <returns>uma categoria.</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Buscar(int id)
         {
             try
             {
                 if (CategoriaRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Categoria não encontrada!" });
                 return Ok(CategoriaRepository.BuscarPorId(id));
             }
             catch (Exception ex)
@@ -89,14 +97,17 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Atualizar(int id, Categorias categoria)
         {
             try
             {
                 if (CategoriaRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Categoria não encontrada!" });
                 CategoriaRepository.Atualizar(id, categoria);
-                return Ok();
+                return Ok(new { mensagem = "Categoria atualizada com sucesso!" });
             }
             catch (Exception ex)
             {
@@ -111,14 +122,17 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <returns>status Ok</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "A")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Deletar(int id)
         {
             try
             {
                 if (CategoriaRepository.BuscarPorId(id) == null)
-                    return NotFound();
+                    return NotFound(new { mensagem = "Categoria não encontrada!" });
                 CategoriaRepository.Deletar(id);
-                return Ok();
+                return Ok(new { mensagem = "Categoria deletada com sucesso!" });
             }
             catch (Exception ex)
             {

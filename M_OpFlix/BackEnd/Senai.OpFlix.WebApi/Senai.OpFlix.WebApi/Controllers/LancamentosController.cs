@@ -69,6 +69,25 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        [HttpGet("buscar/{titulo}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListarPorTitulo(string titulo)
+        {
+            try
+            {
+                if (LancamentoRepository.ListarPorTitulo(titulo) == null)
+                    return NoContent();
+                return Ok(LancamentoRepository.ListarPorTitulo(titulo));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+
+            }
+        }
+
         /// <summary>
         /// Lista os lançamentos de acordo com o id da categoria.
         /// </summary>
@@ -208,6 +227,27 @@ namespace Senai.OpFlix.WebApi.Controllers
                 favorito.IdUsuario = idUsuario;
                 LancamentoRepository.Favoritar(favorito);
                 return Ok(new { mensagem = "Lançamento favoritado!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+
+            }
+        }
+
+        [HttpPost("{id}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult EscreverReview(int id, Reviews review)
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                review.IdUsuario = idUsuario;
+                review.IdLancamento = id;
+                LancamentoRepository.EscreverReview(review);
+                return Ok(new { mensagem = "Review cadastrada!" });
             }
             catch (Exception ex)
             {

@@ -96,6 +96,57 @@ namespace Senai.OpFlix.WebApi.Repositories
             return ListarLancamentoViewModel($"EXEC LancamentosPorDataDeLancamento @Data = {data}");
         }
 
+        public List<LancamentoViewModel> ListarPorTitulo(string titulo)
+        {
+            List<LancamentoViewModel> lancamentos = new List<LancamentoViewModel>();
+            string Query = "SELECT * FROM vmSelecionarDestintos WHERE Titulo LIKE @Titulo";
+            using (SqlConnection con = new SqlConnection(Conexao))
+            {
+                con.Open();
+                SqlDataReader sdr;
+                using (SqlCommand cmd = new SqlCommand(Query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Titulo", "%" + titulo + "%");
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        LancamentoViewModel lancamento = new LancamentoViewModel
+                        {
+                            IdLancamento = Convert.ToInt32(sdr["IdLancamento"]),
+                            Titulo = sdr["Titulo"].ToString(),
+                            Sinopse = sdr["Sinopse"].ToString(),
+                            Categoria = sdr["Categoria"].ToString(),
+                            ClassificacaoIndicativa = sdr["ClassificacaoIndicativa"].ToString(),
+                            TempoDeDuracao = TimeSpan.Parse(sdr["TempoDeDuracao"].ToString()),
+                            DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"])
+                        };
+
+                        try
+                        {
+                            lancamento.Plataforma = sdr["Plataforma"].ToString();
+                        }
+                        catch (Exception)
+                        {
+                            lancamento.Plataforma = null;
+                        }
+
+                        if (sdr["TipoDeMidia"].ToString() == "F")
+                        {
+                            lancamento.TipoDeMidia = "Filme";
+                            lancamento.Episodios = null;
+                        }
+                        else
+                        {
+                            lancamento.TipoDeMidia = "Série";
+                            lancamento.Episodios = Convert.ToInt32(sdr["Episodios"]);
+                        };
+                        lancamentos.Add(lancamento);
+                    }
+                }
+            }
+            return lancamentos;
+        }
+
         public List<LancamentoViewModel> ListarFavoritos(int id)
         {
             return ListarLancamentoViewModel($"EXEC FavoritosPorIdUsuario @IdUsuario = {id}");
@@ -105,7 +156,8 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Lancamentos.Find(id);
+                return ctx.Lancamentos.Include(x => x.Reviews).FirstOrDefault(x => x.IdLancamento == id);
+                    //.Find(id);
             }
         }
 
@@ -113,7 +165,59 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                ctx.Favoritos.Add(favorito);
+                foreach (var item in ctx.Favoritos.ToList())
+                    if (item.IdLancamento == favorito.IdLancamento && item.IdUsuario == favorito.IdUsuario)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        ctx.Favoritos.Add(favorito);
+                        ctx.SaveChanges();
+                    }
+            }
+        }
+
+        public void EscreverReview(Reviews review)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                int x = 0, z = 0;
+                foreach (var item in ctx.Reviews.ToList())
+                {
+                    if(item.IdLancamento == review.IdLancamento && review.IdUsuario == item.IdUsuario)  return;
+                    else if (item.IdLancamento == review.IdLancamento)
+                    {
+                        x += item.Nota;
+                        z++;
+                    }
+                }
+                ctx.Reviews.Add(review);
+                int id = review.IdLancamento ?? default(int);
+                var a = BuscarPorId(id);
+                x = (x+review.Nota)/(z+1);
+                a.NotaMedia = x;
+                review.IdLancamentoNavigation = a;
+                ctx.Lancamentos.Update(a);
+                ctx.SaveChanges();
+            }
+        }
+
+        public void DeletarReview(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                Reviews review = ctx.Reviews.Find(id);
+                ctx.Reviews.Remove(review);
+                ctx.SaveChanges();
+            }
+        }
+
+        public void CadastrarReview(Reviews review)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                ctx.Reviews.Add(review);
                 ctx.SaveChanges();
             }
         }

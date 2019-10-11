@@ -45,6 +45,12 @@ namespace Senai.OpFlix.WebApi.Interfaces
         /// <returns>Lista de lançamentos.</returns>
         List<LancamentoViewModel> ListarPorData(string data);
         /// <summary>
+        /// Lista os lançamentos por titulo.
+        /// </summary>
+        /// <param name="titulo">titulo do lançamento</param>
+        /// <returns>lista de lançamentos.</returns>
+        List<LancamentoViewModel> ListarPorTitulo(string titulo);
+        /// <summary>
         /// Lista os favoritos de um usuário.
         /// </summary>
         /// <param name="id">id do usuário.</param>
@@ -55,6 +61,8 @@ namespace Senai.OpFlix.WebApi.Interfaces
         /// </summary>
         /// <param name="favorito">informações do favorito.</param>
         void Favoritar(Favoritos favorito);
+        void EscreverReview(Reviews review);
+        void DeletarReview(int id);
         /// <summary>
         /// Desfavorita um lançamento.
         /// </summary>

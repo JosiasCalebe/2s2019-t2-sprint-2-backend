@@ -19,9 +19,9 @@ namespace Senai.OpFlix.WebApi.Domains
         public virtual DbSet<ClassificacoesIndicativas> ClassificacoesIndicativas { get; set; }
         public virtual DbSet<Lancamentos> Lancamentos { get; set; }
         public virtual DbSet<Plataformas> Plataformas { get; set; }
+        public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Favoritos> Favoritos { get; set; }
-
 
         // Unable to generate entity type for table 'dbo.Favoritos'. Please see the warning messages.
 
@@ -30,7 +30,7 @@ namespace Senai.OpFlix.WebApi.Domains
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=.\\SqlExpress;Initial Catalog=M_OpFlix;User Id=sa;Pwd=132");
+                optionsBuilder.UseSqlServer("Data Source=.\\SqlExpress; Initial Catalog=M_OpFlix;User Id=sa;Pwd=132");
             }
         }
 
@@ -82,6 +82,10 @@ namespace Senai.OpFlix.WebApi.Domains
 
                 entity.Property(e => e.Episodios).HasDefaultValueSql("((1))");
 
+                entity.Property(e => e.Poster)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Sinopse)
                     .IsRequired()
                     .HasColumnType("text");
@@ -128,9 +132,30 @@ namespace Senai.OpFlix.WebApi.Domains
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<Reviews>(entity =>
+            {
+                entity.HasKey(e => e.IdReview);
+
+                entity.Property(e => e.Review).HasColumnType("text");
+
+                entity.HasOne(d => d.IdLancamentoNavigation)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.IdLancamento)
+                    .HasConstraintName("FK__Reviews__IdLanca__4F47C5E3");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("FK__Reviews__IdUsuar__4E53A1AA");
+            });
+
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario);
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("Email")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.NomeDeUsuario)
                     .HasName("UQ__Usuarios__34DF13F6E542E392")

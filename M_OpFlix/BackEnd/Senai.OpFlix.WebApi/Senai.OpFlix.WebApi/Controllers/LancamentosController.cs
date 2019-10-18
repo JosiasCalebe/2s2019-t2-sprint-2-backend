@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Senai.OpFlix.WebApi.Domains;
 using Senai.OpFlix.WebApi.Interfaces;
 using Senai.OpFlix.WebApi.Repositories;
+using Senai.OpFlix.WebApi.ViewModels;
 
 namespace Senai.OpFlix.WebApi.Controllers
 {
@@ -265,7 +267,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         [Authorize(Roles = "A")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Cadastrar(Lancamentos lancamento)
+        public IActionResult Cadastrar([FromForm] CadastrarLancamentoViewModel lancamento)
         {
             try
             {
@@ -339,7 +341,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Atualizar(int id, Lancamentos lancamento)
+        public IActionResult Atualizar(int id, [FromForm] CadastrarLancamentoViewModel lancamento)
         {
             try
             {

@@ -78,13 +78,13 @@ namespace Senai.OpFlix.WebApi.Interfaces
         /// Cadastra um lançamento.
         /// </summary>
         /// <param name="lancamento">informações do lançamento.</param>
-        void Cadastrar(Lancamentos lancamento);
+        void Cadastrar(CadastrarLancamentoViewModel lancamento);
         /// <summary>
         /// Atualiza um lançamento.
         /// </summary>
         /// <param name="id">id do lançamento.</param>
         /// <param name="lancamento">informações do lançamento.</param>
-        void Atualizar(int id, Lancamentos lancamento);
+        void Atualizar(int id, CadastrarLancamentoViewModel lancamento);
         /// <summary>
         /// Deleta um lançamento.
         /// </summary>

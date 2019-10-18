@@ -26,12 +26,12 @@ SELECT * FROM vmCategoriasPlataformas ORDER BY Plataforma ASC;
 
 
 -- Desafio: listar somente filmes únicos. Quando trouxer a seleção, deverá aparecer somente um Guardiões da Galáxia.
-CREATE VIEW vmSelecionarDestintos AS
+Alter VIEW vmSelecionarDestintos AS
 SELECT IdLancamento, Titulo, Sinopse, Categoria, ClassificacaoIndicativa, DataDeLancamento, TipoDeMidia, 
-TempoDeDuracao, Episodios
+TempoDeDuracao, Episodios, Poster
 FROM (
    SELECT IdLancamento, L.Titulo, L.Sinopse, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
-CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios ,
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios , L.Poster,
           row_number() over (partition by Titulo order by Titulo) as row_number
    FROM Lancamentos L
    JOIN Categorias C ON L.IdCategoria = C.IdCategoria 
@@ -52,10 +52,10 @@ WHERE row_number = 1;
 
 SELECT * FROM vmSelecionarDestintosTodasColunas;
 
-CREATE PROCEDURE FavoritosPorIdUsuario @IdUsuario INT
+ALTER PROCEDURE FavoritosPorIdUsuario @IdUsuario INT
 AS
 SELECT F.IdUsuario, U.NomeDeUsuario, DATEDIFF(year, U.DataDeNascimento, GETDATE()) AS Idade, L.IdLancamento, L.Titulo, L.Sinopse, C.Categoria, P.Plataforma, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
-CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, L.Poster
 FROM Favoritos F
 JOIN Lancamentos L ON L.IdLancamento = F.IdLancamento
 JOIN Usuarios U ON U.IdUsuario = F.IdUsuario
@@ -66,12 +66,12 @@ WHERE U.IdUsuario = @IdUsuario AND DATEDIFF(year, U.DataDeNascimento, GETDATE())
 
 EXEC FavoritosPorIdUsuario @IdUsuario = 4
 
-CREATE PROCEDURE SelecionarDestintosPorIdUsuario @IdUsuario INT
+ALTER PROCEDURE SelecionarDestintosPorIdUsuario @IdUsuario INT
 AS
 SELECT *
 FROM (
 SELECT U.NomeDeUsuario, DATEDIFF(year, U.DataDeNascimento, GETDATE()) AS Idade, L.IdLancamento, L.Titulo, L.Sinopse, C.Categoria, P.Plataforma, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
-CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, row_number() over (partition by Titulo order by Titulo) as row_number
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, L.Poster, row_number() over (partition by Titulo order by Titulo) as row_number
 FROM Lancamentos L
 JOIN Usuarios U ON U.IdUsuario = @IdUsuario
 JOIN Categorias C ON L.IdCategoria = C.IdCategoria
@@ -84,9 +84,9 @@ WHERE row_number = 1
 EXEC SelecionarDestintosPorIdUsuario @IdUsuario = 7
 
 
-CREATE PROCEDURE FavoritosPorNomeDeUsuario @NomeDeUsuario VARCHAR(255)
+ALTER PROCEDURE FavoritosPorNomeDeUsuario @NomeDeUsuario VARCHAR(255)
 AS
-SELECT DISTINCT U.Nome, DATEDIFF(year, U.DataDeNascimento, GETDATE()) AS Idade, L.Titulo, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento,'dd/MM/yyyy') AS DataDeLancamento,L.TipoDeMidia, CONVERT(VARCHAR(5),L.TempoDeDuracao) AS TempoDeDuracao,L.Episodios 
+SELECT DISTINCT U.Nome, DATEDIFF(year, U.DataDeNascimento, GETDATE()) AS Idade, L.Titulo, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento,'dd/MM/yyyy') AS DataDeLancamento,L.TipoDeMidia, CONVERT(VARCHAR(5),L.TempoDeDuracao) AS TempoDeDuracao,L.Episodios, L.Poster
 FROM Favoritos F
 JOIN Lancamentos L ON L.IdLancamento = F.IdLancamento
 JOIN Usuarios U ON U.IdUsuario = F.IdUsuario
@@ -98,20 +98,19 @@ WHERE U.NomeDeUsuario = @NomeDeUsuario AND DATEDIFF(year, U.DataDeNascimento, GE
 EXEC FavoritosPorNomeDeUsuario @NomeDeUsuario = 'Erik'
 
 -- Criar uma view, que dado uma entrada do usuário, por exemplo, 3, mostrar os próximos 3 lançamentos breves. Mostrando também a categoria e a plataforma.
-CREATE VIEW vmProximosLancamentos AS
-SELECT TOP 3 L.Titulo, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento,'dd/MM/yyyy') AS DataDeLancamento,L.TipoDeMidia, CONVERT(VARCHAR(5),L.TempoDeDuracao) AS TempoDeDuracao 
+ALTER VIEW vmProximosLancamentos AS
+SELECT L.Titulo, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento,'dd/MM/yyyy') AS DataDeLancamento,L.TipoDeMidia, CONVERT(VARCHAR(5),L.TempoDeDuracao) AS TempoDeDuracao 
 FROM Lancamentos L
 JOIN Categorias C ON L.IdCategoria = C.IdCategoria
 JOIN Plataformas P ON P.IdPlataforma = L.IdPlataforma
 JOIN ClassificacoesIndicativas CI ON CI.IdClassificacaoIndicativa = L.IdClassificacaoIndicativa
-WHERE L.DataDeLancamento > GETDATE()
-ORDER BY DATEDIFF(year, L.DataDeLancamento, GETDATE()); 
+WHERE L.DataDeLancamento > GETDATE();
 
-SELECT * FROM vmProximosLancamentos;
+SELECT * FROM vmProximosLancamentos ORDER BY DATEDIFF(year, DataDeLancamento, GETDATE());
 
 
 -- Criar um procedimento para listar os filmes dado uma categoria em String do usuário;(Listar os filmes da categoria Ação)
-CREATE PROCEDURE LancamentosPorCategoria @Categoria VARCHAR(255)
+ALTER PROCEDURE LancamentosPorCategoria @Categoria VARCHAR(255)
 AS
 SELECT * FROM vmSelecionarDestintos
 WHERE Categoria = @Categoria;
@@ -119,13 +118,13 @@ WHERE Categoria = @Categoria;
 EXEC LancamentosPorCategoria @Categoria = 'Ação';
 
 -- Criar um procedimento para listar a quantidades de filmes, dada uma categoria por Id;(Listar os filmes da categoria 1 ou o id correspondente da sua tabela).
-CREATE PROCEDURE LancamentosPorIdCategoria @IdCategoria INT
+ALTER PROCEDURE LancamentosPorIdCategoria @IdCategoria INT
 AS
 SELECT IdLancamento, Titulo, Sinopse, Categoria, ClassificacaoIndicativa, DataDeLancamento, TipoDeMidia, 
-TempoDeDuracao, Episodios
+TempoDeDuracao, Episodios, Poster
 FROM (
    SELECT IdLancamento, L.Titulo, L.Sinopse, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
-CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios ,
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, L.Poster,
           row_number() over (partition by Titulo order by Titulo) as row_number
    FROM Lancamentos L
    JOIN Categorias C ON L.IdCategoria = C.IdCategoria 
@@ -136,10 +135,10 @@ WHERE row_number = 1;
 
 EXEC LancamentosPorIdCategoria @IdCategoria = 1;
 
-CREATE PROCEDURE LancamentosPorIdPlataforma @IdPlataforma INT
+ALTER PROCEDURE LancamentosPorIdPlataforma @IdPlataforma INT
 AS
    SELECT IdLancamento, L.Titulo, L.Sinopse, C.Categoria, P.Plataforma, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
-CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, L.Poster
    FROM Lancamentos L
    JOIN Categorias C ON L.IdCategoria = C.IdCategoria
    JOIN Plataformas P ON L.IdPlataforma = P.IdPlataforma
@@ -148,13 +147,13 @@ CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios
 
 EXEC LancamentosPorIdPlataforma @IdPlataforma = 1;
 
-CREATE PROCEDURE LancamentosPorDataDeLancamento @Data DATE
+ALTER PROCEDURE LancamentosPorDataDeLancamento @Data DATE
 AS
 SELECT IdLancamento, Titulo, Sinopse, Categoria, ClassificacaoIndicativa, DataDeLancamento, TipoDeMidia, 
-TempoDeDuracao, Episodios
+TempoDeDuracao, Episodios, Poster
 FROM (
    SELECT IdLancamento, L.Titulo, L.Sinopse, C.Categoria, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
-CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios,
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, L.Poster,
           row_number() over (partition by Titulo order by Titulo) as row_number
    FROM Lancamentos L
    JOIN Categorias C ON L.IdCategoria = C.IdCategoria 

@@ -5,6 +5,7 @@ using Senai.OpFlix.WebApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,7 +44,8 @@ namespace Senai.OpFlix.WebApi.Repositories
                             Categoria = sdr["Categoria"].ToString(),
                             ClassificacaoIndicativa = sdr["ClassificacaoIndicativa"].ToString(),
                             TempoDeDuracao = TimeSpan.Parse(sdr["TempoDeDuracao"].ToString()),
-                            DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"])
+                            DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"]),
+                            Poster = sdr["Poster"].ToString(),
                         };
 
                         try
@@ -157,7 +159,6 @@ namespace Senai.OpFlix.WebApi.Repositories
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 return ctx.Lancamentos.Include(x => x.Reviews).FirstOrDefault(x => x.IdLancamento == id);
-                    //.Find(id);
             }
         }
 
@@ -222,34 +223,74 @@ namespace Senai.OpFlix.WebApi.Repositories
             }
         }
 
-        public void Cadastrar(Lancamentos lancamento)
+        public void Cadastrar(CadastrarLancamentoViewModel lancamento)
         {
-            using (OpFlixContext ctx = new OpFlixContext())
+            if (lancamento.Poster != null && lancamento.Poster.Length > 0)
             {
-                if(lancamento.TipoDeMidia == "F" && lancamento.Episodios != 1)
-                    lancamento.Episodios = 1;
-                ctx.Lancamentos.Add(lancamento);
-                ctx.SaveChanges();
+                var NomeArquivo = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(lancamento.Poster.FileName);
+
+                var CaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads\\imgs", NomeArquivo);
+
+                using (var StreamImagem = new FileStream(CaminhoArquivo, FileMode.Create))
+                {
+                    lancamento.Poster.CopyTo(StreamImagem);
+                }
+
+                Lancamentos lancamentoTemp = new Lancamentos
+                {
+                    IdLancamento = lancamento.IdLancamento,
+                    IdPlataforma = lancamento.IdPlataforma,
+                    IdCategoria = lancamento.IdCategoria,
+                    IdClassificacaoIndicativa = lancamento.IdClassificacaoIndicativa,
+                    DataDeLancamento = lancamento.DataDeLancamento,
+                    Episodios = lancamento.Episodios,
+                    Sinopse = lancamento.Sinopse,
+                    Titulo = lancamento.Titulo,
+                    TipoDeMidia = lancamento.TipoDeMidia,
+                    TempoDeDuracao = lancamento.TempoDeDuracao,
+                    Poster = "uploads/imgs/" + NomeArquivo
+                };
+
+                using (OpFlixContext ctx = new OpFlixContext())
+                {
+                    if (lancamento.TipoDeMidia == "F" && lancamento.Episodios != 1)
+                        lancamento.Episodios = 1;
+                    ctx.Lancamentos.Add(lancamentoTemp);
+                    ctx.SaveChanges();
+                }
             }
         }
 
-        public void Atualizar(int id, Lancamentos lancamento)
+        public void Atualizar(int id, CadastrarLancamentoViewModel lancamento)
         {
-            using (OpFlixContext ctx = new OpFlixContext())
+            if (lancamento.Poster != null && lancamento.Poster.Length > 0)
             {
-                var a = BuscarPorId(id);
-                a.IdCategoria               = lancamento.IdCategoria;
-                a.IdPlataforma              = lancamento.IdPlataforma;
-                a.IdClassificacaoIndicativa = lancamento.IdClassificacaoIndicativa;
-                a.Titulo                    = lancamento.Titulo;
-                a.Sinopse                   = lancamento.Sinopse;
-                a.DataDeLancamento          = lancamento.DataDeLancamento;
-                a.TipoDeMidia               = lancamento.TipoDeMidia;
-                a.TempoDeDuracao            = lancamento.TempoDeDuracao;
-                if(a.TipoDeMidia == "F")    a.Episodios = 1;
-                else a.Episodios            = lancamento.Episodios;
-                ctx.Lancamentos.Update(a);
-                ctx.SaveChanges();
+                var NomeArquivo = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(lancamento.Poster.FileName);
+
+                var CaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads\\imgs", NomeArquivo);
+
+                using (var StreamImagem = new FileStream(CaminhoArquivo, FileMode.Create))
+                {
+                    lancamento.Poster.CopyTo(StreamImagem);
+                }
+
+                using (OpFlixContext ctx = new OpFlixContext())
+                {
+                    var a = BuscarPorId(id);
+                    a.IdCategoria = lancamento.IdCategoria;
+                    a.IdPlataforma = lancamento.IdPlataforma;
+                    a.IdClassificacaoIndicativa = lancamento.IdClassificacaoIndicativa;
+                    a.Titulo = lancamento.Titulo;
+                    a.Sinopse = lancamento.Sinopse;
+                    a.DataDeLancamento = lancamento.DataDeLancamento;
+                    a.TipoDeMidia = lancamento.TipoDeMidia;
+                    a.TempoDeDuracao = lancamento.TempoDeDuracao;
+                    a.Poster = "uploads/imgs/" + NomeArquivo;
+                    if (a.TipoDeMidia == "F") a.Episodios = 1;
+                    else a.Episodios = lancamento.Episodios;
+                    ctx.Lancamentos.Update(a);
+                    ctx.SaveChanges();
+                }
             }
         }
 

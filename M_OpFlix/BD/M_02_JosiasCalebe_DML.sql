@@ -76,6 +76,7 @@ UPDATE Usuarios SET Tipo = 'A' WHERE NomeDeUsuario = 'Helena';
 UPDATE Lancamentos SET Episodios = 8 WHERE IdLancamento = 13;
 UPDATE ClassificacoesIndicativas SET CI = 'L' WHERE ClassificacaoIndicativa = 0;
 UPDATE Usuarios SET DataDeNascimento = '07/07/1990' WHERE IdUsuario = 4;
+UPDATE Lancamentos SET Poster = '../../assets/img/posters/the_boys_temporada_1.png' WHERE IdLancamento = 8;
 
 -- Deletar a série Deuses Americanos;
 DELETE FROM Lancamentos WHERE Titulo LIKE '%Deuses Americanos%';

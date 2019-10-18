@@ -49,9 +49,18 @@ IdUsuario INT FOREIGN KEY REFERENCES Usuarios(IdUsuario)
 ,IdLancamento INT FOREIGN KEY REFERENCES Lancamentos (IdLancamento)
 );
 
+CREATE TABLE Reviews(
+IdUsuario INT FOREIGN KEY REFERENCES Usuarios(IdUsuario)
+,IdLancamento INT FOREIGN KEY REFERENCES Lancamentos (IdLancamento)
+,Review TEXT
+,Nota INT NOT NULL DEFAULT(0)
+);
+
 EXEC sp_RENAME 'Favoritos.IdUsusario' , 'IdUsuario', 'COLUMN'
 
 ALTER TABLE ClassificacoesIndicativas ADD CI VARCHAR(3); 
+ALTER TABLE Lancamentos ADD NotaMedia INT DEFAULT(0) NOT NULL, Poster VARCHAR(500);
+ALTER TABLE Reviews ADD IdReview INT PRIMARY KEY IDENTITY;
 ALTER TABLE Usuarios ADD CONSTRAINT Email UNIQUE(Email);
 -- Incluir uma imagem para cada usuário cadastrado;
 ALTER TABLE Usuarios ADD ImagemUsuario VARCHAR(500) DEFAULT('https://image.flaticon.com/icons/svg/17/17004.svg');

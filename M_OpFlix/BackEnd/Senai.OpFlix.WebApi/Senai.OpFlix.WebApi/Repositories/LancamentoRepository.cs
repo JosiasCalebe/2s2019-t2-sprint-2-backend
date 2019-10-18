@@ -248,7 +248,7 @@ namespace Senai.OpFlix.WebApi.Repositories
                     Titulo = lancamento.Titulo,
                     TipoDeMidia = lancamento.TipoDeMidia,
                     TempoDeDuracao = lancamento.TempoDeDuracao,
-                    Poster = "uploads/imgs/" + NomeArquivo
+                    Poster = "/uploads/imgs/" + NomeArquivo
                 };
 
                 using (OpFlixContext ctx = new OpFlixContext())
@@ -285,7 +285,7 @@ namespace Senai.OpFlix.WebApi.Repositories
                     a.DataDeLancamento = lancamento.DataDeLancamento;
                     a.TipoDeMidia = lancamento.TipoDeMidia;
                     a.TempoDeDuracao = lancamento.TempoDeDuracao;
-                    a.Poster = "uploads/imgs/" + NomeArquivo;
+                    a.Poster = "/uploads/imgs/" + NomeArquivo;
                     if (a.TipoDeMidia == "F") a.Episodios = 1;
                     else a.Episodios = lancamento.Episodios;
                     ctx.Lancamentos.Update(a);

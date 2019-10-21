@@ -264,7 +264,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="lancamento">informações do lançamento.</param>
         /// <returns>status Ok</returns>
         [HttpPost]
-        [Authorize(Roles = "A")]
+        //[Authorize(Roles = "A")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Cadastrar([FromForm] CadastrarLancamentoViewModel lancamento)
@@ -337,7 +337,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="lancamento">informações do lançamento.</param>
         /// <returns>status Ok</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "A")]
+        //[Authorize(Roles = "A")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

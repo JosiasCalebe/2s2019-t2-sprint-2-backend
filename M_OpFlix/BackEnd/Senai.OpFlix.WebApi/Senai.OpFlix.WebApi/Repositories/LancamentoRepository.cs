@@ -292,6 +292,25 @@ namespace Senai.OpFlix.WebApi.Repositories
                     ctx.SaveChanges();
                 }
             }
+            else
+            {
+                using (OpFlixContext ctx = new OpFlixContext())
+                {
+                    var a = BuscarPorId(id);
+                    a.IdCategoria = lancamento.IdCategoria;
+                    a.IdPlataforma = lancamento.IdPlataforma;
+                    a.IdClassificacaoIndicativa = lancamento.IdClassificacaoIndicativa;
+                    a.Titulo = lancamento.Titulo;
+                    a.Sinopse = lancamento.Sinopse;
+                    a.DataDeLancamento = lancamento.DataDeLancamento;
+                    a.TipoDeMidia = lancamento.TipoDeMidia;
+                    a.TempoDeDuracao = lancamento.TempoDeDuracao;
+                    if (a.TipoDeMidia == "F") a.Episodios = 1;
+                    else a.Episodios = lancamento.Episodios;
+                    ctx.Lancamentos.Update(a);
+                    ctx.SaveChanges();
+                }
+            }
         }
 
         public void Desfavoritar(Favoritos favorito)

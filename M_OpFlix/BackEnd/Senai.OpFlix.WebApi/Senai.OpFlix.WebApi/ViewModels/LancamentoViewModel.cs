@@ -18,5 +18,6 @@ namespace Senai.OpFlix.WebApi.ViewModels
         public string TipoDeMidia { get; set; }
         public TimeSpan? TempoDeDuracao { get; set; }
         public int? Episodios { get; set; }
+        public int NotaMedia { get; set; }
     }
 }

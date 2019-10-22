@@ -46,6 +46,7 @@ namespace Senai.OpFlix.WebApi.Repositories
                             TempoDeDuracao = TimeSpan.Parse(sdr["TempoDeDuracao"].ToString()),
                             DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"]),
                             Poster = sdr["Poster"].ToString(),
+                            NotaMedia = Convert.ToInt32(sdr["NotaMedia"])
                         };
 
                         try
@@ -120,7 +121,9 @@ namespace Senai.OpFlix.WebApi.Repositories
                             Categoria = sdr["Categoria"].ToString(),
                             ClassificacaoIndicativa = sdr["ClassificacaoIndicativa"].ToString(),
                             TempoDeDuracao = TimeSpan.Parse(sdr["TempoDeDuracao"].ToString()),
-                            DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"])
+                            DataDeLancamento = Convert.ToDateTime(sdr["DataDeLancamento"]),
+                            NotaMedia = Convert.ToInt32(sdr["NotaMedia"]),
+                            Poster = sdr["Poster"].ToString()
                         };
 
                         try

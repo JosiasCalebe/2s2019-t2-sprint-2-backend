@@ -73,6 +73,7 @@ namespace Senai.OpFlix.WebApi
             }
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

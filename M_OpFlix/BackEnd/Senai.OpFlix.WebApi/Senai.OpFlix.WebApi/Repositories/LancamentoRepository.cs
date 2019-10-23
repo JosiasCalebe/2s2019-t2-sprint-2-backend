@@ -161,7 +161,7 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Lancamentos.Include(x => x.Reviews).FirstOrDefault(x => x.IdLancamento == id);
+                return ctx.Lancamentos.Include(x => x.Reviews).Include(x => x.Favoritos).FirstOrDefault(x => x.IdLancamento == id);
             }
         }
 
@@ -176,6 +176,9 @@ namespace Senai.OpFlix.WebApi.Repositories
                     }
                     else
                     {
+                        //var a = ctx.Usuarios.Find(item.IdUsuario);
+                        //a.Favoritos.Add(item);
+                        //ctx.Usuarios.Update(a);
                         ctx.Favoritos.Add(favorito);
                         ctx.SaveChanges();
                     }
@@ -196,12 +199,16 @@ namespace Senai.OpFlix.WebApi.Repositories
                         z++;
                     }
                 }
+                //var usuario = ctx.Usuarios.Find(review.IdUsuario);
+                //usuario.Reviews.Add(review);
+                //ctx.Usuarios.Update(usuario);
                 ctx.Reviews.Add(review);
                 int id = review.IdLancamento ?? default(int);
                 var a = BuscarPorId(id);
                 x = (x+review.Nota)/(z+1);
                 a.NotaMedia = x;
                 review.IdLancamentoNavigation = a;
+
                 ctx.Lancamentos.Update(a);
                 ctx.SaveChanges();
             }

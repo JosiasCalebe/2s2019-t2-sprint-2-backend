@@ -43,6 +43,29 @@ namespace Senai.OpFlix.WebApi.Controllers
         }
 
         /// <summary>
+        /// Busca um usuário através do id.
+        /// </summary>
+        /// <param name="id">id do lançamento.</param>
+        /// <returns>um lançamento.</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Buscar(int id)
+        {
+            try
+            {
+                if (UsuarioRepository.BuscarPorId(id) == null)
+                    return NotFound(new { mensagem = "Usuário não encontrado!" });
+                return Ok(UsuarioRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+        }
+
+        /// <summary>
         /// Cadastra um usuário.
         /// </summary>
         /// <param name="usuario">informações do usuário.</param>

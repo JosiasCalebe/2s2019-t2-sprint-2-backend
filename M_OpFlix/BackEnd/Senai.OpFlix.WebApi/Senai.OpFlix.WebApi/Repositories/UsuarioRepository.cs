@@ -1,4 +1,5 @@
-﻿using Senai.OpFlix.WebApi.Domains;
+﻿using Microsoft.EntityFrameworkCore;
+using Senai.OpFlix.WebApi.Domains;
 using Senai.OpFlix.WebApi.Interfaces;
 using Senai.OpFlix.WebApi.Utils;
 using Senai.OpFlix.WebApi.ViewModels;
@@ -104,7 +105,7 @@ namespace Senai.OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                return ctx.Usuarios.Find(id);
+                return ctx.Usuarios.Include(x => x.Reviews).Include(x => x.Favoritos).FirstOrDefault(x => x.IdUsuario == id); ;
             }
         }
     }

@@ -181,7 +181,23 @@ namespace Senai.OpFlix.WebApi.Repositories
                         //ctx.Usuarios.Update(a);
                         ctx.Favoritos.Add(favorito);
                         ctx.SaveChanges();
+                        return;
                     }
+
+                ctx.Favoritos.Add(favorito);
+                ctx.SaveChanges();
+            }
+        }
+
+        public bool ChecarFavorito(int idU, int idL)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                foreach (var item in ctx.Favoritos.ToList())
+                    if (item.IdLancamento == idL && item.IdUsuario == idU)
+                        return true;
+
+                return false;
             }
         }
 
@@ -190,7 +206,7 @@ namespace Senai.OpFlix.WebApi.Repositories
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 int x = 0, z = 0;
-                foreach (var item in ctx.Reviews.ToList())
+                foreach (var item in ctx.Reviews.AsNoTracking().ToList())
                 {
                     if(item.IdLancamento == review.IdLancamento && review.IdUsuario == item.IdUsuario)  return;
                     else if (item.IdLancamento == review.IdLancamento)
@@ -202,13 +218,11 @@ namespace Senai.OpFlix.WebApi.Repositories
                 //var usuario = ctx.Usuarios.Find(review.IdUsuario);
                 //usuario.Reviews.Add(review);
                 //ctx.Usuarios.Update(usuario);
-                ctx.Reviews.Add(review);
                 int id = review.IdLancamento ?? default(int);
                 var a = BuscarPorId(id);
                 x = (x+review.Nota)/(z+1);
                 a.NotaMedia = x;
-                review.IdLancamentoNavigation = a;
-
+                ctx.Reviews.Add(review);
                 ctx.Lancamentos.Update(a);
                 ctx.SaveChanges();
             }

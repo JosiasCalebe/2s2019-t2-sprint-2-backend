@@ -237,6 +237,23 @@ namespace Senai.OpFlix.WebApi.Controllers
             }
         }
 
+        [HttpGet("favoritos/{idL}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ChecarFAvorito(int idL)
+        {
+            try
+            {
+                int idU = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
+                return Ok(LancamentoRepository.ChecarFavorito(idU, idL));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+
+            }
+        }
+
         [HttpPost("{id}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -264,7 +281,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="lancamento">informações do lançamento.</param>
         /// <returns>status Ok</returns>
         [HttpPost]
-        //[Authorize(Roles = "A")]
+        [Authorize(Roles = "A")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Cadastrar([FromForm] CadastrarLancamentoViewModel lancamento)
@@ -337,7 +354,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// <param name="lancamento">informações do lançamento.</param>
         /// <returns>status Ok</returns>
         [HttpPut("{id}")]
-        //[Authorize(Roles = "A")]
+        [Authorize(Roles = "A")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

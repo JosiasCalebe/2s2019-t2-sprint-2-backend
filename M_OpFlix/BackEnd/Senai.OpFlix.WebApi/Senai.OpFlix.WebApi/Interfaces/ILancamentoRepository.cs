@@ -61,6 +61,7 @@ namespace Senai.OpFlix.WebApi.Interfaces
         /// </summary>
         /// <param name="favorito">informações do favorito.</param>
         void Favoritar(Favoritos favorito);
+        bool ChecarFavorito(int idU, int idL);
         void EscreverReview(Reviews review);
         void DeletarReview(int id);
         /// <summary>

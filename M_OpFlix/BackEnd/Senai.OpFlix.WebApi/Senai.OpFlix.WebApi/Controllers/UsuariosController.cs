@@ -31,7 +31,7 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// Lista todos os usuários.
         /// </summary>
         /// <returns>lista de usuários.</returns>
-        [HttpGet]
+        [HttpGet("todos")]
         [Authorize(Roles = "A")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -47,14 +47,16 @@ namespace Senai.OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="id">id do lançamento.</param>
         /// <returns>um lançamento.</returns>
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Buscar(int id)
+        public IActionResult Buscar()
         {
             try
             {
+                int id = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == "IdUsuario").Value);
                 if (UsuarioRepository.BuscarPorId(id) == null)
                     return NotFound(new { mensagem = "Usuário não encontrado!" });
                 return Ok(UsuarioRepository.BuscarPorId(id));
@@ -125,6 +127,7 @@ namespace Senai.OpFlix.WebApi.Controllers
 
                     new Claim(ClaimTypes.Role, Usuario.Tipo),
                     new Claim("TipoDeUsuario", Usuario.Tipo),
+                    new Claim("NomeUsuario", Usuario.NomeDeUsuario),
                     new Claim("IdUsuario", Usuario.IdUsuario.ToString()),
                 };
 

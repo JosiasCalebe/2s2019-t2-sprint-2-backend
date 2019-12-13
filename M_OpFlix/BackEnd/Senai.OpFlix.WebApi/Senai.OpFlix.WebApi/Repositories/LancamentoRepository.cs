@@ -183,9 +183,6 @@ namespace Senai.OpFlix.WebApi.Repositories
                         ctx.SaveChanges();
                         return;
                     }
-
-                ctx.Favoritos.Add(favorito);
-                ctx.SaveChanges();
             }
         }
 

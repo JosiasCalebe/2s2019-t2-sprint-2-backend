@@ -62,9 +62,11 @@ JOIN Usuarios U ON U.IdUsuario = F.IdUsuario
 JOIN Categorias C ON L.IdCategoria = C.IdCategoria
 JOIN Plataformas P ON P.IdPlataforma = L.IdPlataforma
 JOIN ClassificacoesIndicativas CI ON CI.IdClassificacaoIndicativa = L.IdClassificacaoIndicativa
-WHERE U.IdUsuario = @IdUsuario AND DATEDIFF(year, U.DataDeNascimento, GETDATE()) >= CI.ClassificacaoIndicativa;
+WHERE U.IdUsuario = @IdUsuario;
 
-EXEC FavoritosPorIdUsuario @IdUsuario = 4
+EXEC FavoritosPorIdUsuario @IdUsuario = 3
+
+SELECT * FROM Favoritos
 
 ALTER PROCEDURE SelecionarDestintosPorIdUsuario @IdUsuario INT
 AS

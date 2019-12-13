@@ -78,7 +78,7 @@ namespace Senai.OpFlix.WebApi.Utils
             var salt = new byte[TamanhoSalt];
             Array.Copy(hashBytes, 0, salt, 0, TamanhoSalt);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, iteracoes);
+            var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, iteracoes);    
             byte[] hash = pbkdf2.GetBytes(TamanhoHash);
 
             for (var i = 0; i < TamanhoHash; i++)
